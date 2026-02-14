@@ -2,6 +2,8 @@
 
 Cloudflare Worker that handles Paddle checkout: unique download links (KV + R2), order records (Supabase), and emails (Resend).
 
+**Linking Git, Cloudflare Workers, R2, and Supabase:** see **[CONNECT.md](CONNECT.md)** for step-by-step instructions.
+
 ## Routes
 
 | Method | Path | Description |
