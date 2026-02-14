@@ -1,0 +1,7 @@
+# Copy to .dev.vars and fill in real values (never commit .dev.vars).
+# For production, use: wrangler secret put <NAME>
+
+PADDLE_WEBHOOK_SECRET=your_paddle_webhook_secret
+RESEND_API_KEY=re_xxxxxxxxxxxx
+SUPABASE_URL=https://xxxxx.supabase.co
+SUPABASE_SERVICE_ROLE_KEY=your_supabase_service_role_key
