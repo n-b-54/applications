@@ -6,7 +6,7 @@ compatibility_date = "2024-01-01"
 # - Workers & Pages > KV > Create namespace (copy the id)
 # - R2 > Create bucket (or use existing; bucket_name below must match)
 kv_namespaces = [
-  { binding = "DOWNLOADS_KV", id = "REPLACE_WITH_YOUR_KV_NAMESPACE_ID" }
+  { binding = "DOWNLOADS_KV", id = "cf1ce7f1c4c6469a98ef7acfd489e0e4" }
 ]
 r2_buckets = [
   { binding = "PRODUCTS_R2", bucket_name = "new-opening-supply" }
