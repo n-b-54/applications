@@ -22,6 +22,12 @@ export interface PaddleWebhookPayload {
     checkout?: {
       customer?: { email?: string };
     };
+    custom_data?: {
+      download_path?: string;
+      sku?: string;
+      product_name?: string;
+      [key: string]: unknown;
+    };
   };
 }
 

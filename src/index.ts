@@ -126,9 +126,13 @@ async function processWebhook(
 
   const firstItem = data.items?.[0];
   const priceId = firstItem?.price?.id ?? firstItem?.product?.id;
-  const r2Key = priceId ? PRICE_TO_R2_KEY[priceId] : undefined;
+  // Use R2 path from Paddle custom_data (e.g. Webflow CMS "download path") or fallback to PRICE_TO_R2_KEY
+  const customData = (data as { custom_data?: { download_path?: string } }).custom_data;
+  const r2Key =
+    customData?.download_path?.trim() ||
+    (priceId ? PRICE_TO_R2_KEY[priceId] : undefined);
   if (!r2Key) {
-    console.error("No R2 key mapping for price/product:", priceId);
+    console.error("No R2 key: no custom_data.download_path and no PRICE_TO_R2_KEY for price:", priceId);
     return;
   }
 
