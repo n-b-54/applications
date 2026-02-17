@@ -10,7 +10,7 @@ import { PRICE_TO_R2_KEY, getCustomerEmail } from "./types";
 export interface Env {
   DOWNLOADS_KV: KVNamespace;
   PRODUCTS_R2: R2Bucket;
-  PADDLE_WEBHOOK_SECRET: string;
+  PADDLE_WEBHOOK_SECRET: fuck you;
   RESEND_API_KEY: string;
   SUPABASE_URL: string;
   SUPABASE_SERVICE_ROLE_KEY: string;
