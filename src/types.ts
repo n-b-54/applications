@@ -2,6 +2,15 @@
  * Paddle webhook payload (transaction.completed).
  * See: https://developer.paddle.com/webhooks/transactions/transaction-completed
  */
+
+/** Custom data that can appear on products, prices, or transactions. */
+export interface PaddleCustomData {
+  download_path?: string;
+  sku?: string;
+  product_name?: string;
+  [key: string]: unknown;
+}
+
 export interface PaddleWebhookPayload {
   event_id: string;
   event_type: string;
@@ -13,29 +22,34 @@ export interface PaddleWebhookPayload {
     customer_id: string | null;
     currency_code: string;
     items: Array<{
-      price?: { id: string; name?: string };
-      product?: { id: string; name?: string };
+      price?: {
+        id: string;
+        name?: string;
+        custom_data?: PaddleCustomData | null;
+      };
+      product?: {
+        id: string;
+        name?: string;
+        custom_data?: PaddleCustomData | null;
+      };
     }>;
     details?: {
-      line_items?: Array<{ totals: { total: string }; product?: { name?: string } }>;
+      totals?: { total: string; grand_total: string };
+      line_items?: Array<{
+        totals: { total: string };
+        product?: { name?: string };
+      }>;
     };
     checkout?: {
       customer?: { email?: string };
     };
-    custom_data?: {
-      download_path?: string;
-      sku?: string;
-      product_name?: string;
-      [key: string]: unknown;
-    };
+    custom_data?: PaddleCustomData | null;
   };
 }
 
-/** Customer email from Paddle payload (checkout or nested). */
+/** Extract customer email from the Paddle payload. */
 export function getCustomerEmail(data: PaddleWebhookPayload["data"]): string {
-  const email = data.checkout?.customer?.email;
-  if (email) return email;
-  return "noreply@example.com";
+  return data.checkout?.customer?.email || "";
 }
 
 export interface KVTransactionRecord {
@@ -44,15 +58,6 @@ export interface KVTransactionRecord {
 }
 
 export interface KVTokenRecord {
-  productId: string;
   r2Key: string;
   expiresAt: string;
 }
-
-/**
- * Map Paddle price_id to R2 object key.
- * Add entries when you add new products.
- */
-export const PRICE_TO_R2_KEY: Record<string, string> = {
-  // Example: "pri_xxxxxxxxxxxxx": "products/your-product.zip",
-};
